@@ -1,0 +1,47 @@
+data:
+  class_path: aerial_image_cls.data.aerial_image.AerialImageDataset
+  init_args:
+    root_path: data/dataset1
+    train_batch_size: 128
+    val_batch_size: 128
+    num_workers: 8
+    num_classes: 3
+    mixup_alpha: 0.
+    cutmix_alpha: 0.
+    train_crop_size: 176
+    val_resize_size: 232
+    auto_augment_policy: ta_wide
+    random_erase_prob: 0.1
+
+model:
+  class_path: aerial_image_cls.models.TorchvisionWrapper
+  init_args:
+    model_name: densenet121
+    num_classes: 3
+    pretrained: True
+    learning_rate: 0.008
+    momentum: 0.9
+    weight_decay: 0.00002
+    norm_weight_decay: 0.0
+    label_smoothing: 0.1
+    max_epochs: 60
+
+trainer:
+  max_epochs: 60
+  accelerator: "gpu"
+  devices: 1
+  precision: 32
+
+  callbacks:
+    - class_path: RichProgressBar
+      init_args:
+        leave: True
+    - class_path: ModelCheckpoint
+      init_args:
+        filename: "epoch_{epoch:03d}_acc_{val/acc:.02f}"
+        auto_insert_metric_name: False
+        save_top_k: -1
+        every_n_epochs: 5
+    - LearningRateMonitor
+
+seed_everything: 23333
