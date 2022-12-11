@@ -1,12 +1,15 @@
 /data/*
 /lightning_logs
 /aerial_image_cls/version.py
+/results
 
 *_pb2.py
 
 .DS_Store
 
 !.gitkeep
+
+*.pth
 
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python

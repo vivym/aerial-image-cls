@@ -1,29 +1,18 @@
 data:
   class_path: aerial_image_cls.data.aerial_image.AerialImageDataset
   init_args:
-    root_path: data/dataset1
+    root_path: data/250mjs
+    labels: [0, 5, 10, 30, 40, 80, 90]
     train_batch_size: 128
     val_batch_size: 128
     num_workers: 8
-    num_classes: 3
-    mixup_alpha: 0.
-    cutmix_alpha: 0.
-    train_crop_size: 176
-    val_resize_size: 232
-    auto_augment_policy: ta_wide
-    random_erase_prob: 0.1
 
 model:
-  class_path: aerial_image_cls.models.TorchvisionWrapper
+  class_path: aerial_image_cls.models.FCDenseNet
   init_args:
     model_name: densenet121
-    num_classes: 3
-    pretrained: True
-    learning_rate: 0.008
-    momentum: 0.9
-    weight_decay: 0.00002
-    norm_weight_decay: 0.0
-    label_smoothing: 0.1
+    num_classes: 7
+    learning_rate: 0.001
     max_epochs: 60
 
 trainer:
